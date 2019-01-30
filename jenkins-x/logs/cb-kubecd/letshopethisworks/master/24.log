@@ -1,0 +1,152 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1548848862.8812513,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1548848862.8818185,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1548848863.917984,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1548848865.0974054,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/cb-kubecd/letshopethisworks.git\" @ \"727cfad0544f89e2052479571d3780cd9c54a6cb\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  19.882 [id=30]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins7180479348407822424test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/cb-kubecd/letshopethisworks
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/cb-kubecd/letshopethisworks.git
+ > git init /home/jenkins/go/src/github.com/cb-kubecd/letshopethisworks # timeout=10
+Fetching upstream changes from https://github.com/cb-kubecd/letshopethisworks.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/cb-kubecd/letshopethisworks.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/cb-kubecd/letshopethisworks.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/cb-kubecd/letshopethisworks.git # timeout=10
+Fetching upstream changes from https://github.com/cb-kubecd/letshopethisworks.git
+ > git fetch --tags --progress https://github.com/cb-kubecd/letshopethisworks.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 727cfad0544f89e2052479571d3780cd9c54a6cb (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 727cfad0544f89e2052479571d3780cd9c54a6cb
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 727cfad0544f89e2052479571d3780cd9c54a6cb
+Commit message: "Merge pull request #2 from cb-kubecd/wip"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.3
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.3
+Tag v0.0.3 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/letshopethisworks main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.3
++ skaffold build -f skaffold.yaml
+time="2019-01-30T11:48:35Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Using cache
+ ---> 7946bda20ad4
+Step 3/4 : ENTRYPOINT /letshopethisworks
+ ---> Using cache
+ ---> b4fd6e7dcfc6
+Step 4/4 : COPY ./bin/ /
+ ---> Using cache
+ ---> fbfd4d3b16f2
+Successfully built fbfd4d3b16f2
+The push refers to a repository [10.27.253.176:5000/cb-kubecd/letshopethisworks]
+24fbf6f3e13a: Preparing
+24fbf6f3e13a: Layer already exists
+0.0.3: digest: sha256:70b39d78653d4378fa553c22dae4922e2beb1b06f75c9971cc7a01b172d6cf2a size: 528
+Build complete in 260.333476ms
+Starting test...
+Test complete in 93.14µs
+changeme -> 10.27.253.176:5000/cb-kubecd/letshopethisworks:0.0.3
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 10.27.253.176:5000/cb-kubecd/letshopethisworks:0.0.3
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/cb-kubecd/letshopethisworks/charts/letshopethisworks
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.3
+Using batch mode as inside a pipeline
+Generating change log from git ref 727cfad0544f89e2052479571d3780cd9c54a6cb => ec9e9cce82284dc3972c21e535820959540a72b5
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for cb-kubecd/letshopethisworks and tag v0.0.3 so creating a new release
+Updated the release information at https://github.com/cb-kubecd/letshopethisworks/releases/tag/v0.0.3
+generated: /home/jenkins/go/src/github.com/cb-kubecd/letshopethisworks/charts/letshopethisworks/templates/release.yaml
+Created Release letshopethisworks-0-0-3 resource in namespace jx
+Updating PipelineActivity cb-kubecd-letshopethisworks-master-24 with version 0.0.3
+Updated PipelineActivities cb-kubecd-letshopethisworks-master-24 with release notes URL: https://github.com/cb-kubecd/letshopethisworks/releases/tag/v0.0.3
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file letshopethisworks-0.0.3.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.3
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app letshopethisworks version 0.0.3 to namespace jx-staging
+Created Pull Request: https://github.com/cb-kubecd/environment-jrawlings-dev13-staging/pull/3
+
+Pull Request https://github.com/cb-kubecd/environment-jrawlings-dev13-staging/pull/3 is merged at sha 995ebe07b7445f651e760ee0a03a213e8ccb3505
+Pull Request merged but we are not waiting for the update pipeline to complete!
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
